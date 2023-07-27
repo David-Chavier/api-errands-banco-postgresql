@@ -44,7 +44,6 @@ export class ErrandsController {
 
       const user = await new UserRepository().getById(userid);
 
-      console.log(isArchived);
       if (!user) {
         return res
           .status(404)
