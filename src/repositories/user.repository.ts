@@ -1,4 +1,3 @@
-import { users } from "../data/users";
 import { Database } from "../database/config/database.connection";
 import { UserEntity } from "../database/entities/user.entity";
 import { User } from "../models/user";

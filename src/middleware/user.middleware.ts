@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { users } from "../data/users";
 import { UserRepository } from "../repositories/user.repository";
 
 export class UserMiddleware {

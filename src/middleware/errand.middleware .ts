@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { users } from "../data/users";
 
 export class ErrandMiddleware {
   public static validateCreateErrand(

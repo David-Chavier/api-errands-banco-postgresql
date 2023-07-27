@@ -1,5 +1,3 @@
-import { PoolClient } from "pg";
-import pool from "./database.config";
 import { DataSource } from "typeorm";
 import config from "./database.config";
 
