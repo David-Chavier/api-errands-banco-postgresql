@@ -8,6 +8,7 @@ export class ErrandsController {
     try {
       const { userid } = req.params;
       const { description, details } = req.body;
+      const { isArchived } = req.query;
 
       const user = await new UserRepository().getById(userid);
 
@@ -23,6 +24,7 @@ export class ErrandsController {
 
       const errands = await new ErrandsRepository().list({
         userid: userid,
+        isArchived: isArchived === "true" ? true : false,
       });
 
       res.status(200).send({
@@ -49,16 +51,10 @@ export class ErrandsController {
           .send({ ok: false, message: "user was not found" });
       }
 
-      let archived = false;
-
-      if (isArchived === "true") {
-        archived = true;
-      }
-
       const filteredErrands = await new ErrandsRepository().list({
         userid: userid,
         description: description as string,
-        isArchived: archived,
+        isArchived: isArchived === "true" ? true : false,
       });
 
       res.status(200).send({
@@ -105,18 +101,11 @@ export class ErrandsController {
 
       await errandRepository.update(errand);
 
-      let archived = false;
-
-      if (isArchived === "true") {
-        archived = true;
-      }
-
       const errands = await new ErrandsRepository().list({
         userid: userid,
-        isArchived: archived,
+        isArchived: isArchived === "true" ? true : false,
       });
 
-      console.log(isArchived);
       res.status(200).send({
         ok: true,
         message: "Errand was successfully update",
@@ -150,7 +139,7 @@ export class ErrandsController {
 
       const errands = await new ErrandsRepository().list({
         userid: userid,
-        isArchived: !isArchived,
+        isArchived: isArchived === "true" ? true : false,
       });
 
       res.status(200).send({
