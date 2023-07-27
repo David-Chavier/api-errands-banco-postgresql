@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
-import { DataSource, Entity } from "typeorm";
+import { DataSource } from "typeorm";
 
 dotenv.config();
 
-let entities = ["src/database/entities/**/*.js"];
-let migrations = ["src/database/migrations/**/*.js"];
+let entities = ["src/database/entities/**/*.ts"];
+let migrations = ["src/database/migrations/**/*.ts"];
 
 if (process.env.DB_ENV === "production") {
   let entities = ["src/database/entities/**/*.js"];
