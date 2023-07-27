@@ -3,13 +3,13 @@ import { DataSource } from "typeorm";
 
 dotenv.config();
 
-let entities = ["src/database/entities/**/*.ts"];
-let migrations = ["src/database/migrations/**/*.ts"];
+// let entities = ["src/database/entities/**/*.ts"];
+// let migrations = ["src/database/migrations/**/*.ts"];
 
-if (process.env.DB_ENV === "production") {
-  let entities = ["src/database/entities/**/*.js"];
-  let migrations = ["src/database/migrations/**/*.js"];
-}
+// if (process.env.DB_ENV === "production") {
+//   let entities = ["src/database/entities/**/*.js"];
+//   let migrations = ["src/database/migrations/**/*.js"];
+// }
 
 const config = new DataSource({
   type: "postgres",
@@ -23,8 +23,8 @@ const config = new DataSource({
   },
   synchronize: false,
   schema: "errands",
-  entities: entities,
-  migrations: migrations,
+  entities: ["src/database/entities/**/*.js"],
+  migrations: ["src/database/migrations/**/*.js"],
 });
 
 export default config;
