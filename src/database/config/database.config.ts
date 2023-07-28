@@ -1,5 +1,9 @@
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
+import { ErrandEntity } from "../entities/errand.entity";
+import { UserEntity } from "../entities/user.entity";
+import { createTables1690032276731 } from "../migrations/1690032276731-createTables";
+import { errandEntityDefaltTrue1690238885289 } from "../migrations/1690238885289-errandEntityDefaltTrue";
 
 dotenv.config();
 
@@ -21,10 +25,11 @@ const config = new DataSource({
   ssl: {
     rejectUnauthorized: false,
   },
+  logging: true,
   synchronize: false,
   schema: "errands",
-  entities: ["src/database/entities/**/*.js"],
-  migrations: ["src/database/migrations/**/*.js"],
+  entities: [ErrandEntity, UserEntity],
+  migrations: [createTables1690032276731, errandEntityDefaltTrue1690238885289],
 });
 
 export default config;
