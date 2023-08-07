@@ -1,9 +1,9 @@
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
-import { ErrandEntity } from "../entities/errand.entity";
-import { UserEntity } from "../entities/user.entity";
-import { createTables1690032276731 } from "../migrations/1690032276731-createTables";
-import { errandEntityDefaltTrue1690238885289 } from "../migrations/1690238885289-errandEntityDefaltTrue";
+import { ErrandEntity } from "../../database/entities/errand.entity";
+import { UserEntity } from "../../database/entities/user.entity";
+import { createTables1690032276731 } from "../../database/migrations/1690032276731-createTables";
+import { errandEntityDefaltTrue1690238885289 } from "../../database/migrations/1690238885289-errandEntityDefaltTrue";
 
 dotenv.config();
 
