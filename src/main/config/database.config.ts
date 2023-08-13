@@ -25,7 +25,6 @@ const config = new DataSource({
   ssl: {
     rejectUnauthorized: false,
   },
-  logging: true,
   synchronize: false,
   schema: "errands",
   entities: [ErrandEntity, UserEntity],
