@@ -1,6 +1,6 @@
-import { Database } from "../main/database/database.connection";
-import { UserEntity } from "../app/shared/database/entities/user.entity";
-import { User } from "../app/models/user";
+import { Database } from "../../../../main/database/database.connection";
+import { UserEntity } from "../../../shared/database/entities/user.entity";
+import { User } from "../../../models/user";
 
 export class UserRepository {
   private repository = Database.connection.getRepository(UserEntity);

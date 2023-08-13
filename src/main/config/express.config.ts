@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
-import { userRoutes } from "../../routes/user.routes";
-import { userLogin } from "../../routes/login.routes";
+import { userRoutes } from "../../app/features/user/routes/user.routes";
+import { userLogin } from "../../app/features/user/routes/login.routes";
 
 export const createApp = () => {
   const app = express();
