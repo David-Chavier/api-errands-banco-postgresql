@@ -1,5 +1,5 @@
 import { v4 as createUuid } from "uuid";
-import { ErrandEntity } from "../../database/entities/errand.entity";
+import { ErrandEntity } from "../shared/database/entities/errand.entity";
 import { User } from "./user";
 
 export class Errand {

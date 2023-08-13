@@ -1,5 +1,5 @@
 import { Database } from "../main/database/database.connection";
-import { UserEntity } from "../database/entities/user.entity";
+import { UserEntity } from "../app/shared/database/entities/user.entity";
 import { User } from "../app/models/user";
 
 export class UserRepository {

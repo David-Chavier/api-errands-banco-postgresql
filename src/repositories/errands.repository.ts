@@ -1,5 +1,5 @@
 import { Database } from "../main/database/database.connection";
-import { ErrandEntity } from "../database/entities/errand.entity";
+import { ErrandEntity } from "../app/shared/database/entities/errand.entity";
 import { Errand } from "../app/models/errand";
 import { UserRepository } from "./user.repository";
 
