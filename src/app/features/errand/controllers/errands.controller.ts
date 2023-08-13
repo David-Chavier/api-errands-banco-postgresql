@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { Errand } from "../app/models/errand";
-import { UserRepository } from "../repositories/user.repository";
-import { ErrandsRepository } from "../repositories/errands.repository";
+import { Errand } from "../../../models/errand";
+import { UserRepository } from "../../../../repositories/user.repository";
+import { ErrandsRepository } from "../../../../repositories/errands.repository";
 
 export class ErrandsController {
   public async create(req: Request, res: Response) {

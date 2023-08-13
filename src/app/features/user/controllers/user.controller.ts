@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { User } from "../app/models/user";
-import { UserRepository } from "../repositories/user.repository";
+import { User } from "../../../models/user";
+import { UserRepository } from "../../../../repositories/user.repository";
 
 export class UserController {
   public async login(req: Request, res: Response) {
