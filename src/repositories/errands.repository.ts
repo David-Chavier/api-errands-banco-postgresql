@@ -1,6 +1,6 @@
 import { Database } from "../main/database/database.connection";
 import { ErrandEntity } from "../database/entities/errand.entity";
-import { Errand } from "../models/errand";
+import { Errand } from "../app/models/errand";
 import { UserRepository } from "./user.repository";
 
 interface ListErrandsParams {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Errand } from "../models/errand";
+import { Errand } from "../app/models/errand";
 import { UserRepository } from "../repositories/user.repository";
 import { ErrandsRepository } from "../repositories/errands.repository";
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../models/user";
+import { User } from "../app/models/user";
 import { UserRepository } from "../repositories/user.repository";
 
 export class UserController {
