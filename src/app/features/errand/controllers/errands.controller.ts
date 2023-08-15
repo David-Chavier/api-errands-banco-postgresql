@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Errand } from "../../../models/errand";
 import { UserRepository } from "../../user/repositories/user.repository";
 import { ErrandsRepository } from "../repositories/errands.repository";
+import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 
 export class ErrandsController {
   public async create(req: Request, res: Response) {
@@ -10,28 +11,16 @@ export class ErrandsController {
       const { description, details } = req.body;
       const { isArchived } = req.query;
 
-      const user = await new UserRepository().getById(userid);
+      const isArquivedString = isArchived?.toString();
 
-      if (!user) {
-        return res.status(404).send({
-          ok: false,
-          message: "user was not found",
-        });
-      }
-
-      const errand = new Errand(description, details, userid);
-      await new ErrandsRepository().create(errand);
-
-      const errands = await new ErrandsRepository().list({
-        userid: userid,
-        isArchived: isArchived === "true" ? true : false,
+      const result = await new CreateErrandUsecase().execute({
+        userid,
+        description,
+        details,
+        isArchived: isArquivedString,
       });
 
-      res.status(200).send({
-        ok: true,
-        message: "Errand was successfully add",
-        data: errands.map((errand) => errand.toJson()),
-      });
+      res.status(result.code).send(result);
     } catch (err: any) {
       res.status(500).send({ ok: false, message: err.toString() });
     }
