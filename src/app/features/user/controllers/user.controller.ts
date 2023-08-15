@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { User } from "../../../models/user";
 import { UserRepository } from "../repositories/user.repository";
+import { CreateUserUsecase } from "../usecases/create-user.usecase";
+import { ListUserUsecase } from "../usecases/list-user.usecase";
 
 export class UserController {
   public async login(req: Request, res: Response) {
@@ -27,18 +29,13 @@ export class UserController {
       });
     }
   }
-  public create(req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     try {
       const { username, password } = req.body;
 
-      const user = new User(username, password);
-      new UserRepository().create(user);
+      const result = await new CreateUserUsecase().execute(req.body);
 
-      return res.status(200).send({
-        ok: true,
-        message: "user was create successfully created",
-        data: user.username,
-      });
+      return res.status(result.code).send(result);
     } catch (err: any) {
       return res.status(500).send({
         ok: false,
@@ -49,12 +46,9 @@ export class UserController {
 
   public async list(req: Request, res: Response) {
     try {
-      const repository = new UserRepository();
-      const result = await repository.list();
+      const result = await new ListUserUsecase().execute();
 
-      return res
-        .status(200)
-        .send({ ok: true, data: result.map((user) => user.toJson()) });
+      return res.status(result.code).send(result);
     } catch (err: any) {
       return res.status(500).send({ ok: false, message: err.toString() });
     }
