@@ -65,7 +65,7 @@ export class UserMiddleware {
   ) {
     try {
       const { userid } = req.params;
-      const { password } = req.body;
+      const { newPassword } = req.body;
 
       if (!userid) {
         return res
@@ -73,13 +73,13 @@ export class UserMiddleware {
           .send({ ok: false, message: "user not logged in" });
       }
 
-      if (!password) {
+      if (!newPassword) {
         return res
           .status(404)
           .send({ ok: false, message: "new password not informed" });
       }
 
-      if (password.length < 8) {
+      if (newPassword.length < 8) {
         return res.status(400).send({
           ok: false,
           message: "Password is mandatory to have at least 8 characters",
