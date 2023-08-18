@@ -3,25 +3,16 @@ import { User } from "../../../models/user";
 import { UserRepository } from "../repositories/user.repository";
 import { CreateUserUsecase } from "../usecases/create-user.usecase";
 import { ListUserUsecase } from "../usecases/list-user.usecase";
+import { LoginUsecase } from "../usecases/login.usecase";
 
 export class UserController {
   public async login(req: Request, res: Response) {
     try {
       const { username, password } = req.body;
 
-      const user = new User(username, password);
-      const userValidation = await new UserRepository().login(user);
+      const result = await new LoginUsecase().execute(req.body);
 
-      if (!userValidation) {
-        return res
-          .status(401)
-          .send({ ok: false, message: "invalid username or password" });
-      }
-      res.status(200).send({
-        ok: true,
-        message: "logged in user",
-        data: userValidation.toJson(),
-      });
+      res.status(result.code).send(result);
     } catch (err: any) {
       return res.status(500).send({
         ok: false,
