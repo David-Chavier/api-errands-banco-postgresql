@@ -24,10 +24,4 @@ export class LoginUsecase implements Usecase {
       data: repository.toJson(),
     };
   }
-
-  // res.status(200).send({
-  //   ok: true,
-  //   message: "logged in user",
-  //   data: userValidation.toJson(),
-  // });
 }
