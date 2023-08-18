@@ -44,8 +44,10 @@ export class UpdateErrandsUsecase implements Usecase {
     errand.isArchived = params.archive ?? errand.isArchived;
 
     await errandRepository.update(errand);
+
     const cacheRepository = new CacheRepository();
     await cacheRepository.delete(`Errands from user: ${params.userid}`);
+    await cacheRepository.delete(`Errand: ${params.errandid}`);
 
     const errandList = await errandRepository.list({
       userid: params.userid,

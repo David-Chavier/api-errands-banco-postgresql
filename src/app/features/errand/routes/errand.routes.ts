@@ -19,6 +19,12 @@ export const errandRoutes = () => {
     new ErrandsController().list
   );
 
+  app.get(
+    "/:errandid",
+    [ErrandMiddleware.validateListErrand],
+    new ErrandsController().listById
+  );
+
   app.put(
     "/:errandid",
     [ErrandMiddleware.validateUpdateErrand],

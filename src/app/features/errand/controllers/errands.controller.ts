@@ -6,6 +6,7 @@ import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 import { ListErrandsUsecase } from "../usecases/list-errands.usecase";
 import { UpdateErrandsUsecase } from "../usecases/update-errand.usecase";
 import { DeleteErrandUsecase } from "../usecases/delete-errand.usecase";
+import { ListByErrandUsecase } from "../usecases/listbyid-errand.usecase";
 
 export class ErrandsController {
   public async create(req: Request, res: Response) {
@@ -38,6 +39,21 @@ export class ErrandsController {
         userid,
         description: (description as string) || undefined,
         isArchived: (isArchived as string) || undefined,
+      });
+
+      res.status(result.code).send(result);
+    } catch (err: any) {
+      res.status(500).send({ ok: false, message: err.toString() });
+    }
+  }
+
+  public async listById(req: Request, res: Response) {
+    try {
+      const { userid, errandid } = req.params;
+
+      const result = await new ListByErrandUsecase().execute({
+        userid,
+        errandid,
       });
 
       res.status(result.code).send(result);
