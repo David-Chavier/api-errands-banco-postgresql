@@ -17,7 +17,7 @@ export class CacheRepository {
     await this._repository.set(key, JSON.stringify(value));
   }
 
-  public async setEx(key: string, value: any, seconds: number) {
+  public async setEx(key: string, seconds: number, value: any) {
     await this._repository.setex(key, seconds, JSON.stringify(value));
   }
 

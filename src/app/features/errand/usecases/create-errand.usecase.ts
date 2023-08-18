@@ -1,4 +1,5 @@
 import { Errand } from "../../../models/errand";
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
 import { UserRepository } from "../../user/repositories/user.repository";
@@ -30,16 +31,28 @@ export class CreateErrandUsecase implements Usecase {
     }
 
     await new ErrandsRepository().create(errand);
-    const result = await new ErrandsRepository().list({
+
+    const cacheRepository = new CacheRepository();
+    await cacheRepository.delete(`Errands from user: ${params.userid}`);
+
+    const errandList = await new ErrandsRepository().list({
       userid: params.userid,
       isArchived: params.isArchived === "true" ? true : false,
     });
+
+    const result = errandList.map((errand) => errand.toJson());
+
+    await cacheRepository.setEx(
+      `Errands from user: ${params.userid}`,
+      300000,
+      result
+    );
 
     return {
       ok: true,
       code: 200,
       message: "Errand was successfully add",
-      data: result.map((errand) => errand.toJson()),
+      data: result,
     };
   }
 }

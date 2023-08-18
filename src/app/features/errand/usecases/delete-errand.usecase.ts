@@ -1,3 +1,4 @@
+import { CacheRepository } from "../../../shared/database/repositories/cache.repository";
 import { Result } from "../../../shared/util/result.contract";
 import { Usecase } from "../../../shared/util/usecase.contract";
 import { UserRepository } from "../../user/repositories/user.repository";
@@ -24,16 +25,27 @@ export class DeleteErrandUsecase implements Usecase {
       return { ok: false, code: 404, message: "Errand was not found" };
     }
 
-    const result = await errandRepository.list({
+    const cacheRepository = new CacheRepository();
+    await cacheRepository.delete(`Errands from user: ${params.userid}`);
+
+    const errandList = await errandRepository.list({
       userid: params.userid,
       isArchived: params.isArchived === "true" ? true : false,
     });
+
+    const result = errandList.map((errand) => errand.toJson());
+
+    await cacheRepository.setEx(
+      `Errands from user: ${params.userid}`,
+      300000,
+      result
+    );
 
     return {
       ok: true,
       code: 200,
       message: "Errand was successfully deleted",
-      data: result.map((errand) => errand.toJson()),
+      data: result,
     };
   }
 }
