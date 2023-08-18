@@ -5,6 +5,7 @@ import { ErrandsRepository } from "../repositories/errands.repository";
 import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 import { ListErrandsUsecase } from "../usecases/list-errands.usecase";
 import { UpdateErrandsUsecase } from "../usecases/update-errand.usecase";
+import { DeleteErrandUsecase } from "../usecases/delete-errand.usecase";
 
 export class ErrandsController {
   public async create(req: Request, res: Response) {
@@ -71,32 +72,13 @@ export class ErrandsController {
       const { userid, errandid } = req.params;
       const { isArchived } = req.query;
 
-      const user = await new UserRepository().getById(userid);
-
-      if (!user) {
-        return res
-          .status(404)
-          .send({ ok: false, message: "user was not found" });
-      }
-
-      const errand = await new ErrandsRepository().delete(errandid);
-
-      if (!errand) {
-        return res
-          .status(404)
-          .send({ ok: false, message: "Errand was not found" });
-      }
-
-      const errands = await new ErrandsRepository().list({
-        userid: userid,
-        isArchived: isArchived === "true" ? true : false,
+      const result = await new DeleteErrandUsecase().execute({
+        userid,
+        errandid,
+        isArchived: isArchived as string,
       });
 
-      res.status(200).send({
-        ok: true,
-        message: "Errand was successfully delete",
-        data: errands.map((errand) => errand.toJson()),
-      });
+      res.status(result.code).send(result);
     } catch (err: any) {
       res.status(500).send({ ok: false, message: err.toString() });
     }

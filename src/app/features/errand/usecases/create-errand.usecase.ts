@@ -19,7 +19,7 @@ export class CreateErrandUsecase implements Usecase {
       params.userid
     );
 
-    const user = new UserRepository().getById(params.userid);
+    const user = await new UserRepository().getById(params.userid);
 
     if (!user) {
       return {
