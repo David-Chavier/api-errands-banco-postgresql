@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { UserRepository } from "../repositories/user.repository";
 
 export class UserMiddleware {
   public static validateLogin(req: Request, res: Response, next: NextFunction) {
@@ -44,12 +43,6 @@ export class UserMiddleware {
           ok: false,
           message: "Password is mandatory to have at least 8 characters",
         });
-      }
-
-      if (await new UserRepository().getByUsername(username)) {
-        return res
-          .status(400)
-          .send({ ok: false, message: "Username already taken" });
       }
 
       next();
