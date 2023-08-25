@@ -102,9 +102,9 @@ export class UserMiddleware {
       const uuidPattern =
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-      uuidPattern.test(userid);
+      const result = uuidPattern.test(userid);
 
-      if (userid) {
+      if (!result) {
         return res
           .status(400)
           .send({ ok: false, message: "userid is not valid" });
