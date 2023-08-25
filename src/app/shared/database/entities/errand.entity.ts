@@ -14,7 +14,7 @@ export class ErrandEntity {
   @PrimaryGeneratedColumn("uuid", { name: "errand_id" })
   errandId: string;
 
-  @Column({ name: "is_archived", type: "bool", default: false })
+  @Column({ name: "is_archived", default: false })
   isArchived: boolean;
 
   @Column()

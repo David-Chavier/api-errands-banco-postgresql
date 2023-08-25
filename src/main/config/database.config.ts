@@ -15,7 +15,7 @@ dotenv.config();
 //   let migrations = ["src/database/migrations/**/*.js"];
 // }
 
-const config = new DataSource({
+let config = new DataSource({
   type: "postgres",
   port: 5432,
   host: process.env.DB_HOST,
@@ -30,5 +30,15 @@ const config = new DataSource({
   entities: [ErrandEntity, UserEntity],
   migrations: [createTables1690032276731, errandEntityDefaltTrue1690238885289],
 });
+
+if (process.env.DB_ENV === "test") {
+  config = new DataSource({
+    type: "sqlite",
+    database: "db.sqlite3",
+    synchronize: false,
+    entities: [ErrandEntity, UserEntity],
+    migrations: ["tests/app/shared/database/migrations/**/*.ts"],
+  });
+}
 
 export default config;
