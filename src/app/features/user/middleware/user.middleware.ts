@@ -98,12 +98,16 @@ export class UserMiddleware {
   ) {
     try {
       const { userid } = req.params;
-      const { password } = req.body;
 
-      if (!userid) {
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      uuidPattern.test(userid);
+
+      if (userid) {
         return res
-          .status(401)
-          .send({ ok: false, message: "user not logged in" });
+          .status(400)
+          .send({ ok: false, message: "userid is not valid" });
       }
     } catch (err: any) {
       res.status(500).send({ ok: false, message: err.toString() });
