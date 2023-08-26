@@ -60,15 +60,20 @@ export class UserMiddleware {
       const { userid } = req.params;
       const { newPassword } = req.body;
 
-      if (!userid) {
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      const result = uuidPattern.test(userid);
+
+      if (!result) {
         return res
-          .status(401)
+          .status(400)
           .send({ ok: false, message: "user not logged in" });
       }
 
       if (!newPassword) {
         return res
-          .status(404)
+          .status(400)
           .send({ ok: false, message: "new password not informed" });
       }
 
