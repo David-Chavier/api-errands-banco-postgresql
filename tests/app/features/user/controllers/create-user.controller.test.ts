@@ -88,7 +88,7 @@ describe("testando criação de um usuario", () => {
     expect(result.body.ok).toBe(false);
   });
 
-  test("Deveria retornar erro 400 se username já existe", async () => {
+  test("Deveria retornar erro 403 se username já existe", async () => {
     const user = new User("any_username", "12345");
 
     await createUser(user);
@@ -98,11 +98,29 @@ describe("testando criação de um usuario", () => {
       .send({ username: "any_username", password: "12345678" });
 
     expect(result).toBeDefined();
-    expect(result.status).toBe(400);
-    expect(result.status).toEqual(400);
-    expect(result).toHaveProperty("status", 400);
+    expect(result.status).toBe(403);
+    expect(result.status).toEqual(403);
+    expect(result).toHaveProperty("status", 403);
     expect(result).toHaveProperty("body.ok");
     expect(result.body.message).toBe("Username already taken");
     expect(result.body.ok).toBe(false);
+  });
+
+  test("Deveria retornar code 200 se o usuário for criado com sucesso", async () => {
+    const user = new User("any_username", "12345");
+
+    await createUser(user);
+
+    const result = await supertest(sut)
+      .post("/user")
+      .send({ username: "any_usernamealeatorio", password: "123456789" });
+
+    expect(result).toBeDefined();
+    expect(result.status).toBe(200);
+    expect(result.status).toEqual(200);
+    expect(result).toHaveProperty("status", 200);
+    expect(result).toHaveProperty("body.ok");
+    expect(result.body.message).toBe("user was created successfully");
+    expect(result.body.ok).toBe(true);
   });
 });
