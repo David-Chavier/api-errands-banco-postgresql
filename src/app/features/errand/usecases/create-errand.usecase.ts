@@ -25,7 +25,7 @@ export class CreateErrandUsecase implements Usecase {
     if (!user) {
       return {
         ok: false,
-        code: 404,
+        code: 401,
         message: "user was not found",
       };
     }

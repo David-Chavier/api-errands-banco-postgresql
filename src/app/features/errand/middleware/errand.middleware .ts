@@ -10,7 +10,12 @@ export class ErrandMiddleware {
       const { userid } = req.params;
       const { description } = req.body;
 
-      if (!userid) {
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      const result = uuidPattern.test(userid);
+
+      if (!result) {
         return res
           .status(401)
           .send({ ok: false, message: "user not logged in" });
