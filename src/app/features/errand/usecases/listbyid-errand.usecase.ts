@@ -14,7 +14,7 @@ export class ListByErrandUsecase implements Usecase {
     const user = await new UserRepository().getById(params.userid);
 
     if (!user) {
-      return { ok: false, code: 404, message: "User was not found" };
+      return { ok: false, code: 401, message: "user not logged in" };
     }
 
     const cacheRepository = new CacheRepository();

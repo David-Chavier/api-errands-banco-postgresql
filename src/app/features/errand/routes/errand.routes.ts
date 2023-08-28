@@ -21,7 +21,7 @@ export const errandRoutes = () => {
 
   app.get(
     "/:errandid",
-    [ErrandMiddleware.validateListErrand],
+    [ErrandMiddleware.validateListByIdErrand],
     new ErrandsController().listById
   );
 
