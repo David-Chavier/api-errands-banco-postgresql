@@ -12,10 +12,10 @@ interface DeleteErrandParams {
 
 export class DeleteErrandUsecase implements Usecase {
   public async execute(params: DeleteErrandParams): Promise<Result> {
-    const user = new UserRepository().getById(params.userid);
+    const user = await new UserRepository().getById(params.userid);
 
     if (!user) {
-      return { ok: false, code: 404, message: "user was not found" };
+      return { ok: false, code: 401, message: "user was not found" };
     }
 
     const errandRepository = new ErrandsRepository();

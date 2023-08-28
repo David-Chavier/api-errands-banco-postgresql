@@ -97,13 +97,20 @@ export class ErrandMiddleware {
     try {
       const { userid, errandid } = req.params;
 
-      if (!userid) {
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      const validateUserid = uuidPattern.test(userid);
+
+      if (!validateUserid) {
         return res
           .status(401)
           .send({ ok: false, message: "user not logged in" });
       }
 
-      if (!errandid) {
+      const validateErrandid = uuidPattern.test(errandid);
+
+      if (!validateErrandid) {
         return res
           .status(401)
           .send({ ok: false, message: "unidentified errand" });
