@@ -66,13 +66,20 @@ export class ErrandMiddleware {
       const { userid, errandid } = req.params;
       const { description, details, archived } = req.body;
 
-      if (!userid) {
+      const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+      const validateUserid = uuidPattern.test(userid);
+
+      if (!validateUserid) {
         return res
           .status(401)
           .send({ ok: false, message: "user not logged in" });
       }
 
-      if (!errandid) {
+      const validateErrandid = uuidPattern.test(errandid);
+
+      if (!validateErrandid) {
         return res
           .status(401)
           .send({ ok: false, message: "unidentified errand" });
@@ -81,7 +88,7 @@ export class ErrandMiddleware {
       if (!description && !details && !archived) {
         return res
           .status(400)
-          .send({ ok: false, message: "No value change was requested " });
+          .send({ ok: false, message: "No value change was requested" });
       }
     } catch (err: any) {
       res.status(500).send({ ok: false, message: err.toString() });
