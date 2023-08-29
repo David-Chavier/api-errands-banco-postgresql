@@ -3,6 +3,7 @@ import { CacheDatabase } from "../../../../../src/main/database/redis.connection
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
 import { UserEntity } from "../../../../../src/app/shared/database/entities/user.entity";
 import { DeleteUserUsecase } from "../../../../../src/app/features/user/usecases/delete-user.usecase";
+import { User } from "../../../../../src/app/models/user";
 
 describe("testando usecase de delete de um usuario", () => {
   beforeAll(async () => {
@@ -38,5 +39,22 @@ describe("testando usecase de delete de um usuario", () => {
     expect(result).toHaveProperty("code", 404);
     expect(result.message).toBe("user was not found");
     expect(result).not.toHaveProperty("data");
+  });
+
+  test("Deveria retornar 200 se o usuario for deletado", async () => {
+    const sut = createSut();
+    const user = new User("any_name", "12345");
+
+    jest.spyOn(UserRepository.prototype, "delete").mockResolvedValue(1);
+    jest.spyOn(UserRepository.prototype, "list").mockResolvedValue([user]);
+
+    const result = await sut.execute("any_userid");
+
+    expect(result).toBeDefined();
+    expect(result.code).toBe(200);
+    expect(result.ok).toEqual(true);
+    expect(result).toHaveProperty("code", 200);
+    expect(result.message).toBe("user was sucessfully deleted");
+    expect(result.data).toStrictEqual([user.toJson()]);
   });
 });

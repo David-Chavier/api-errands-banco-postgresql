@@ -49,4 +49,25 @@ describe("testando usecase de criação de um usuario", () => {
     expect(result.message).toBe("Username already taken");
     expect(result).not.toHaveProperty("data");
   });
+
+  test("Deveria retornar 200 se o usuario for criado", async () => {
+    const sut = createSut();
+    const user = new User("any_name", "12345");
+
+    jest
+      .spyOn(UserRepository.prototype, "getByUsername")
+      .mockResolvedValue(false);
+
+    const result = await sut.execute({
+      username: "any_name",
+      password: "12345",
+    });
+
+    expect(result).toBeDefined();
+    expect(result.code).toBe(200);
+    expect(result.ok).toEqual(true);
+    expect(result).toHaveProperty("code", 200);
+    expect(result.message).toBe("user was created successfully");
+    expect(result.data).toStrictEqual(user.username);
+  });
 });

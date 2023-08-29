@@ -29,7 +29,7 @@ describe("testando usecase de listagem de usuarios", () => {
     return new ListUserUsecase();
   };
 
-  test("Deveria retornar erro 200 os usuários forem listados", async () => {
+  test("Deveria retornar 200 os usuários forem listados", async () => {
     const sut = createSut();
 
     const user = new User("any_name", "12345");
