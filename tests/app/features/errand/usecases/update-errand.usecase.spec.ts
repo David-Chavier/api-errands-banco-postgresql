@@ -23,6 +23,8 @@ describe("testando usecase de update de recados", () => {
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();

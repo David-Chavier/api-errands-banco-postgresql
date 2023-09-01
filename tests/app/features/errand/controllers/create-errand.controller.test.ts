@@ -6,6 +6,7 @@ import { User } from "../../../../../src/app/models/user";
 import { UserRepository } from "../../../../../src/app/features/user/repositories/user.repository";
 import { UserEntity } from "../../../../../src/app/shared/database/entities/user.entity";
 import { ErrandEntity } from "../../../../../src/app/shared/database/entities/errand.entity";
+import { ErrandsRepository } from "../../../../../src/app/features/errand/repositories/errands.repository";
 
 describe("testando criação de um recado", () => {
   beforeAll(async () => {
@@ -92,5 +93,22 @@ describe("testando criação de um recado", () => {
     expect(result).toHaveProperty("body.ok");
     expect(result.body.message).toBe("Errand was successfully add");
     expect(result.body.ok).toBe(true);
+  });
+
+  test("Deveria retornar erro 500 se ocorrer erro ao criar o recado", async () => {
+    const user = new User("any_username", "123456789");
+    await createUser(user);
+
+    const listUser = await new UserRepository().list();
+
+    jest.spyOn(ErrandsRepository.prototype, "create").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut)
+      .post(`/user/${listUser[0].userId}/errand`)
+      .send({ description: "alguma coisa" });
+
+    expect(result.status).toEqual(500);
   });
 });

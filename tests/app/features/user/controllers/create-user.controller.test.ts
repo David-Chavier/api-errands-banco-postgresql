@@ -123,4 +123,18 @@ describe("testando criação de um usuario", () => {
     expect(result.body.message).toBe("user was created successfully");
     expect(result.body.ok).toBe(true);
   });
+
+  test("Deveria retornar erro 500 se ocorrer erro de servidor ao criar um usuário", async () => {
+    const user = new User("any_username", "12345");
+
+    jest.spyOn(UserRepository.prototype, "create").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut)
+      .post("/user")
+      .send({ username: "any_usernamealeatorio", password: "123456789" });
+
+    expect(result.status).toBe(500);
+  });
 });

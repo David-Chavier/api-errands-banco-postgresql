@@ -15,11 +15,15 @@ describe("testando usecase de listagem de usuarios", () => {
   });
 
   afterAll(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     await Database.connection.destroy();
     await CacheDatabase.connection.quit();
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();

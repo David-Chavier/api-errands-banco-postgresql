@@ -75,6 +75,5 @@ describe("testando delete de um usuário", () => {
     expect(result).toHaveProperty("body.ok");
     expect(result.body.message).toBe("user was sucessfully deleted");
     expect(result.body.ok).toBe(true);
-    // expect(result.body.data).toBe([user2.toJson()]);
   });
 });

@@ -24,6 +24,8 @@ describe("testando usecase de listagem de recados por id", () => {
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();

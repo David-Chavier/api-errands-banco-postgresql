@@ -46,4 +46,14 @@ describe("testando listagem dos usuários", () => {
     expect(result.body.message).toBe("Registered users");
     expect(result.body.ok).toBe(true);
   });
+
+  test("Deveria retornar erro 500 se ocorrer erro de servidor ao listar um usuário", async () => {
+    jest.spyOn(UserRepository.prototype, "list").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut).get("/user").send();
+
+    expect(result.status).toBe(500);
+  });
 });

@@ -19,6 +19,8 @@ describe("testando usecase de criação de um usuario", () => {
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();

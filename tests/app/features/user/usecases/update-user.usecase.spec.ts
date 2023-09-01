@@ -20,6 +20,8 @@ describe("testando usecase de update de um usuario", () => {
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();

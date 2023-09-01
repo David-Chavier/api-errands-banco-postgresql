@@ -87,4 +87,16 @@ describe("testando login de usuário", () => {
     expect(result.body.message).toBe("logged in user");
     expect(result.body.ok).toBe(true);
   });
+
+  test("Deveria retornar erro 500 se ocorrer erro de servidor quando um usuário tentar fazer login", async () => {
+    jest.spyOn(UserRepository.prototype, "login").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut)
+      .post("/login")
+      .send({ username: "any_username", password: "12345" });
+
+    expect(result.status).toBe(500);
+  });
 });

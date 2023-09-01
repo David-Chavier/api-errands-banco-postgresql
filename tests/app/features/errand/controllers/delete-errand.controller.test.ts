@@ -129,4 +129,27 @@ describe("testando a rota de delete de recados", () => {
     expect(result.body.message).toBe("Errand was successfully deleted");
     expect(result.body.ok).toBe(true);
   });
+
+  test("Deveria retornar erro 500 se ocorrer erro ao deletar um recado", async () => {
+    const user = new User("any_username", "123456789");
+    await createUser(user);
+
+    const listUser = await new UserRepository().list();
+
+    const errand = new Errand("wrqf", "asfsdf", listUser[0].userId);
+    await createErrand(errand);
+    const listErrand = await new ErrandsRepository().list({
+      userid: listUser[0].userId,
+    });
+
+    jest.spyOn(ErrandsRepository.prototype, "delete").mockImplementation(() => {
+      throw new Error();
+    });
+
+    const result = await supertest(sut)
+      .delete(`/user/${listUser[0].userId}/errand/${listErrand[0].id}`)
+      .send();
+
+    expect(result.status).toBe(500);
+  });
 });

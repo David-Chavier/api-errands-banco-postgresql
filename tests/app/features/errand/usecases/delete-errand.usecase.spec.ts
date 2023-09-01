@@ -23,6 +23,8 @@ describe("testando usecase de delete de recados", () => {
   });
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     const repository = Database.connection.getRepository(UserEntity);
 
     await repository.clear();
