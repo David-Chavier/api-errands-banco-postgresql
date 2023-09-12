@@ -73,8 +73,8 @@ export class ErrandsController {
         errandid,
         description,
         details,
-        archive,
-        isArchived: isArchived as string,
+        archive: archive === "true" ? true : false,
+        isArchived: isArchived === "true" ? true : false,
       });
 
       res.status(result.code).send(result);

@@ -10,7 +10,7 @@ interface UpdateErrandsParams {
   description: string;
   details: string;
   archive: boolean;
-  isArchived: string;
+  isArchived: boolean;
 }
 
 export class UpdateErrandsUsecase implements Usecase {
@@ -51,7 +51,7 @@ export class UpdateErrandsUsecase implements Usecase {
 
     const errandList = await errandRepository.list({
       userid: params.userid,
-      isArchived: params.isArchived === "true" ? true : false,
+      isArchived: params.isArchived,
     });
 
     const result = errandList.map((errand) => errand.toJson());

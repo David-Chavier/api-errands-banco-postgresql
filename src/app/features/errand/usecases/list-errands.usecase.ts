@@ -23,19 +23,22 @@ export class ListErrandsUsecase implements Usecase {
       `Errands from user: ${params.userid}`
     );
 
+    const isArchived = params.isArchived === "true" ? true : false;
+
     if (resultCache) {
-      return {
-        ok: true,
-        code: 200,
-        message: "Errand list cache",
-        data: resultCache,
-      };
+      if (resultCache[0]?.isArchived === isArchived)
+        return {
+          ok: true,
+          code: 200,
+          message: "Errand list cache",
+          data: resultCache,
+        };
     }
 
     const errandList = await new ErrandsRepository().list({
       userid: params.userid,
       description: params.description,
-      isArchived: params.isArchived === "true" ? true : false,
+      isArchived: isArchived,
     });
 
     const result = errandList.map((errand) => errand.toJson());
