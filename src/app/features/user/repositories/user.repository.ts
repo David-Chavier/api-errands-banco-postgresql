@@ -13,6 +13,7 @@ export class UserRepository {
 
   public async create(user: User) {
     const userEntity = this.repository.create({
+      userId: user.userId,
       username: user.username,
       password: user.password,
     });

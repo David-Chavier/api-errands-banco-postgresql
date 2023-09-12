@@ -27,6 +27,7 @@ export class ErrandsRepository {
 
   public async create(errand: Errand) {
     const errandEntity = await this.repository.create({
+      errandId: errand.id,
       idUser: errand.userId,
       description: errand.description,
       details: errand.details,
