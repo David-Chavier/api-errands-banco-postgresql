@@ -18,10 +18,7 @@ dotenv.config();
 let config = new DataSource({
   type: "postgres",
   port: 5432,
-  host: process.env.DB_HOST,
-  username: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
+  url: process.env.DB_URL,
   ssl: {
     rejectUnauthorized: false,
   },

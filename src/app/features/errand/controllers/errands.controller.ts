@@ -1,7 +1,4 @@
 import { Request, Response } from "express";
-import { Errand } from "../../../models/errand";
-import { UserRepository } from "../../user/repositories/user.repository";
-import { ErrandsRepository } from "../repositories/errands.repository";
 import { CreateErrandUsecase } from "../usecases/create-errand.usecase";
 import { ListErrandsUsecase } from "../usecases/list-errands.usecase";
 import { UpdateErrandsUsecase } from "../usecases/update-errand.usecase";
